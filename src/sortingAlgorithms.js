@@ -28,7 +28,7 @@ function bubbleSort(auxiliaryArray, animations) {
 //insertion sort
 export function getInsertionSortAnimations(array) {
   let animations = []
-  let auxiliaryArray = array.slice(0)
+  let auxiliaryArray = array.slice()
   insertionSort(auxiliaryArray, animations)
   return animations
 }
@@ -44,6 +44,32 @@ function insertionSort(auxiliaryArray, animations) {
       swap(auxiliaryArray, j - 1, j)
       j--
     }
+  }
+}
+
+//selection sort
+export function getSelectionSortAnimations(array) {
+  let animations = []
+  let auxiliaryArray = array.slice()
+  selectionSort(auxiliaryArray, animations)
+  return animations
+}
+
+function selectionSort(auxiliaryArray, animations) {
+  let currentIdx = 0
+  while (currentIdx < auxiliaryArray.length - 1) {
+    let smallestIdx = currentIdx
+    for (let i = currentIdx + 1; i < auxiliaryArray.length; i++) {
+      animations.push(['comparison1', i, smallestIdx])
+      animations.push(['comparison2', i, smallestIdx])
+      if (auxiliaryArray[smallestIdx] > auxiliaryArray[i]) {
+        smallestIdx = i
+      }
+    }
+    animations.push(['swap', currentIdx, auxiliaryArray[smallestIdx]])
+    animations.push(['swap', smallestIdx, auxiliaryArray[currentIdx]])
+    swap(auxiliaryArray, smallestIdx, currentIdx)
+    currentIdx++
   }
 }
 
